@@ -27,6 +27,7 @@ function Configurator({
     mentionBadge,
     topNavBG,
     topNavText,
+    sideNavText,
   } = theme;
   const slackTheme = [
     columnBG,
@@ -37,7 +38,7 @@ function Configurator({
     // 9 used, just to avoid breaking themes too much.
     //
     // https://twitter.com/wavebeem/status/1243741888944857088
-    columnBG,
+    sideNavText,
     activeItem,
     activeItemText,
     hoverItem,

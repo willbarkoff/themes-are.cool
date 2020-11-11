@@ -1,11 +1,13 @@
 /* Safari renders the partially transparent thin text WAY thinner than it should
  * be. This doesn't really seem to help, but people say it should? Ugh.
  */
+
 body {
   -webkit-font-smoothing: antialiased;
   -webkit-text-stroke: 1px transparent;
   min-width: 800px;
   overflow-x: auto;
+  font-family: 'Lato', sans-serif !important;
 }
 
 :root {
@@ -21,7 +23,6 @@ body {
   --cool-mention-badge: #cccccc;
   --cool-top-nav-bg: #cccccc;
   --cool-top-nav-text: #cccccc;
-
   background: var(--cool-bg);
   color: var(--cool-fg);
   scrollbar-color: var(--cool-fg) var(--cool-bg);

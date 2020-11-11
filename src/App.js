@@ -1,33 +1,22 @@
 import React, { useState, useEffect } from "react";
 import tinycolor from "tinycolor2";
-import { lch } from "d3-color";
+import { lch, hsl } from "d3-color";
 
 import Configurator from "./Configurator";
 import Sidebar from "./Sidebar";
 import { useDarkMode } from "./useDarkMode";
 
-function makeHoverColor(color, themeType) {
-  const x = lch(color);
-  if (themeType === "dark") {
-    x.c += 10;
-    x.l += 10;
-  } else {
-    x.c += 5;
-    x.l -= 5;
-  }
-  return x.formatHex();
+function makeHoverColor(color) {
+  let x = hsl(color)
+  x.h += 3
+  x.l = 0.94
+  return x.formatHex()
 }
 
-function makeColumnBGColor(color, themeType) {
-  const x = lch(color);
-  if (themeType === "dark") {
-    x.c = 20;
-    x.l = 15;
-  } else {
-    x.c = 10;
-    x.l = 95;
-  }
-  return x.formatHex();
+function makeActivePresence(color) {
+  let x = hsl(color)
+  x.l = 0.38
+  return x.formatHex()
 }
 
 function pickReadableColor(color, light, dark) {
@@ -37,7 +26,7 @@ function pickReadableColor(color, light, dark) {
 }
 
 function App() {
-  const [primaryColor, setPrimaryColor] = useState("#1565c0");
+  const [primaryColor, setPrimaryColor] = useState("#001A5E");
   const isDarkMode = useDarkMode();
   useEffect(() => {
     setThemeType(isDarkMode ? "dark" : "light");
@@ -47,18 +36,16 @@ function App() {
   const fg = themeType === "dark" ? "#d1d2d3" : "#1d1c1d";
   const border =
     themeType === "dark" ? "rgba(255, 255, 255, 0.1)" : "rgba(0, 0, 0, 0.1)";
-  const columnBG =
-    themeType === "dark"
-      ? makeColumnBGColor(primaryColor, themeType)
-      : makeColumnBGColor(primaryColor, themeType);
+  const columnBG = "#f8f8fa"
+  const sideNavText = makeHoverColor(primaryColor)
   const activeItem = primaryColor;
-  const activeItemText = pickReadableColor(activeItem, "#ffffff", "#000000");
-  const hoverItem = makeHoverColor(columnBG, themeType);
-  const textColor = fg;
-  const activePresence = textColor;
-  const mentionBadge = "#cd2553";
+  const activeItemText = "#f8f8fa";
+  const hoverItem = sideNavText;
+  const textColor = primaryColor;
+  const activePresence = makeActivePresence(primaryColor);
+  const mentionBadge = activePresence;
   const topNavBG = primaryColor;
-  const topNavText = activeItemText;
+  const topNavText = "#ffffff";
   const searchBorder = pickReadableColor(
     primaryColor,
     "rgba(255, 255, 255, 0.2)",
@@ -85,6 +72,7 @@ function App() {
     mentionBadge,
     topNavBG,
     topNavText,
+    sideNavText,
   };
   useEffect(() => {
     const style = document.documentElement.style;
